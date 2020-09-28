@@ -1,0 +1,18 @@
+SELECT
+	COT_PREGAO AS 'Data do Pregão',
+    ACAO_CODIGO AS 'Codigo de Ação',
+    COT_PREULT AS 'Preço de Fechamento',
+    IND_SIGLA AS 'Sigla Indice',
+    LIST_PERCENT_ACOES AS 'Part. (%)'
+FROM
+	COTACAO 
+		NATURAL JOIN
+	ACAO
+		NATURAL JOIN
+	LISTAGEM
+WHERE
+	EXTRACT(DAY FROM COT_PREGAO) = 15
+    AND LIST_PERCENT_ACOES BETWEEN 1 AND 2
+    AND IND_SIGLA = (SELECT IND_SIGLA
+					  FROM	indice
+                      WHERE IND_NOME);
